@@ -65,4 +65,7 @@ dependencies {
     // image loading
     implementation(libs.glide)
     implementation(libs.glide.compose)
+
+    // Di
+    implementation(libs.bundles.koin)
 }

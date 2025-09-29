@@ -24,33 +24,43 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 import ru.dekabrsky.rfl.News
 import ru.dekabrsky.rfl.navigation.Route
 import ru.dekabrsky.rfl.navigation.TopLevelBackStack
 import ru.dekabrsky.rfl.news.presentation.MockData
+import ru.dekabrsky.rfl.news.presentation.model.NewsDetailsViewState
 import ru.dekabrsky.rfl.news.presentation.model.NewsUiModel
+import ru.dekabrsky.rfl.news.presentation.viewModel.NewsDetailsViewModel
 import ru.dekabrsky.rfl.uikit.RatingBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsDetailsDialog(
     news: NewsUiModel,
-    stack: TopLevelBackStack<Route>,
 ) {
+    val viewModel = koinViewModel<NewsDetailsViewModel> {
+        parametersOf(news)
+    }
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     ModalBottomSheet(
-        onDismissRequest = { stack.removeLast() }
+        onDismissRequest = { viewModel.onBack() },
     ) {
-        NewsDetailsContent(news)
+        NewsDetailsContent(state, viewModel::onRatingChanged)
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun NewsDetailsContent(news: NewsUiModel) {
-    var rating by remember { mutableFloatStateOf(0f) }
-
+fun NewsDetailsContent(
+    state: NewsDetailsViewState,
+    onRatingChanged: (Float) -> Unit = {},
+) {
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -58,36 +68,36 @@ fun NewsDetailsContent(news: NewsUiModel) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
-            text = news.time,
+            text = state.news.time,
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Text(
-            text = news.title,
+            text = state.news.title,
             style = MaterialTheme.typography.titleMedium,
         )
 
-        if (!news.text.isNullOrBlank()) {
+        if (!state.news.text.isNullOrBlank()) {
             Text(
-                text = news.text,
+                text = state.news.text,
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
 
-        if (!news.imageUrl.isNullOrBlank()) {
+        if (!state.news.imageUrl.isNullOrBlank()) {
             GlideImage(
-                model = news.imageUrl,
+                model = state.news.imageUrl,
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Fit,
             )
         }
 
-        RatingBar(rating) { rating = it }
+        RatingBar(state.rating) { onRatingChanged(it) }
 
-        if (rating > 0f) {
-            Text("Ваша оценка: $rating")
+        if (state.userVoteVisible) {
+            Text("Ваша оценка: ${state.rating}")
         }
     }
 }
@@ -96,6 +106,6 @@ fun NewsDetailsContent(news: NewsUiModel) {
 @Composable
 fun NewsDetailDialogPreview() {
     NewsDetailsContent(
-        MockData.getNews().first(),
+        NewsDetailsViewState(MockData.getNews().first()),
     )
 }
