@@ -61,4 +61,8 @@ dependencies {
     // Navigation
     implementation(libs.bundles.navigation3)
     implementation(libs.kotlinx.serialization.core)
+
+    // image loading
+    implementation(libs.glide)
+    implementation(libs.glide.compose)
 }
