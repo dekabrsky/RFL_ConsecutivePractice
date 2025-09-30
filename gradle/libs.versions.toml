@@ -8,6 +8,9 @@ espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.9.4"
 activityCompose = "1.11.0"
 composeBom = "2025.09.01"
+glide-compose = "1.0.0-beta08"
+glide = "5.0.5"
+koinAndroid = "4.1.0"
 
 materialIconsCore = "1.7.3"
 nav3Core = "1.0.0-alpha10"
@@ -31,6 +34,12 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glide-compose" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
+
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
@@ -48,4 +57,8 @@ navigation3 = [
     "androidx-navigation3-runtime",
     "androidx-navigation3-ui",
     "androidx-lifecycle-viewmodel-navigation3"
+]
+koin = [
+    "koin-android",
+    "koin-compose",
 ]
