@@ -9,26 +9,62 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.androidx.compose.koinViewModel
 import ru.dekabrsky.rfl.News
 import ru.dekabrsky.rfl.NewsDetails
 import ru.dekabrsky.rfl.navigation.Route
 import ru.dekabrsky.rfl.navigation.TopLevelBackStack
 import ru.dekabrsky.rfl.news.presentation.MockData
+import ru.dekabrsky.rfl.news.presentation.model.NewsListViewState
 import ru.dekabrsky.rfl.news.presentation.model.NewsUiModel
+import ru.dekabrsky.rfl.news.presentation.viewModel.NewsListViewModel
+import ru.dekabrsky.rfl.uikit.FullscreenError
+import ru.dekabrsky.rfl.uikit.FullscreenLoading
 
 @Composable
 fun NewsListScreen(topLevelBackStack: TopLevelBackStack<Route>) {
-    val news = remember { MockData.getNews() }
+    val viewModel = koinViewModel<NewsListViewModel>()
+    val state by viewModel.viewState.collectAsStateWithLifecycle()
 
-    LazyColumn {
-        news.forEach { news ->
-            item(key = news.id) {
-                NewsListItem(news) { topLevelBackStack.add(NewsDetails(it)) }
+    NewsListScreenContent(
+        state.state,
+        viewModel::onNewsClick,
+        viewModel::onRetryClick,
+    )
+}
+
+@Composable
+private fun NewsListScreenContent(
+    state: NewsListViewState.State,
+    onNewsClick: (NewsUiModel) -> Unit = {},
+    onRetryClick: () -> Unit = {},
+) {
+    when (state) {
+        NewsListViewState.State.Loading -> {
+            FullscreenLoading()
+        }
+
+        is NewsListViewState.State.Error -> {
+            FullscreenError(
+                retry = { onRetryClick() },
+                text = state.error
+            )
+        }
+
+        is NewsListViewState.State.Success -> {
+            LazyColumn {
+                state.data.forEach { news ->
+                    item {
+                        NewsListItem(news) { onNewsClick(it) }
+                    }
+                }
             }
         }
     }
@@ -70,5 +106,7 @@ fun NewsListItem(news: NewsUiModel, onNewsClick: (NewsUiModel) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun NewsListPreview() {
-    NewsListScreen(TopLevelBackStack<Route>(News))
+    NewsListScreenContent(
+        NewsListViewState.State.Success(MockData.getNews())
+    )
 }

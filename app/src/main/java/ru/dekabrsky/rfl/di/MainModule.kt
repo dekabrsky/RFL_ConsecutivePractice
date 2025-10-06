@@ -9,6 +9,4 @@ import ru.dekabrsky.rfl.news.presentation.viewModel.NewsDetailsViewModel
 
 val mainModule = module {
     single { TopLevelBackStack<Route>(News) }
-
-    viewModel { NewsDetailsViewModel(get(), get()) }
 }
