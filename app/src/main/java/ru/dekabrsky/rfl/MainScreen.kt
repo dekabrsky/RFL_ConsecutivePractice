@@ -77,7 +77,7 @@ fun MainScreen() {
                     ContentBlue("Players")
                 }
                 entry<News> {
-                    NewsListScreen(topLevelBackStack)
+                    NewsListScreen()
                 }
                 entry<NewsDetails>(
                     metadata = DialogSceneStrategy.dialog(DialogProperties())
