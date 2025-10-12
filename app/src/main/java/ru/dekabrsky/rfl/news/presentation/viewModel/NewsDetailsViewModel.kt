@@ -1,9 +1,12 @@
 package ru.dekabrsky.rfl.news.presentation.viewModel
 
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import ru.dekabrsky.rfl.R
 import ru.dekabrsky.rfl.navigation.Route
 import ru.dekabrsky.rfl.navigation.TopLevelBackStack
 import ru.dekabrsky.rfl.news.presentation.model.NewsDetailsViewState

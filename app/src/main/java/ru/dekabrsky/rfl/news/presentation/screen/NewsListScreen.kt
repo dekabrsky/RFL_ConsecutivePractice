@@ -29,7 +29,7 @@ import ru.dekabrsky.rfl.uikit.FullscreenError
 import ru.dekabrsky.rfl.uikit.FullscreenLoading
 
 @Composable
-fun NewsListScreen(topLevelBackStack: TopLevelBackStack<Route>) {
+fun NewsListScreen() {
     val viewModel = koinViewModel<NewsListViewModel>()
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
