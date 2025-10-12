@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.dekabrsky.rfl.NewsDetails
+import ru.dekabrsky.rfl.core.formatDateTime
 import ru.dekabrsky.rfl.core.launchLoadingAndError
 import ru.dekabrsky.rfl.navigation.Route
 import ru.dekabrsky.rfl.navigation.TopLevelBackStack
@@ -55,7 +56,7 @@ class NewsListViewModel(
             title = news.title,
             text = news.text,
             imageUrl = news.imageUrl,
-            time = news.time.toString(), // todo
+            time = formatDateTime(news.time),
         )
     }
 }

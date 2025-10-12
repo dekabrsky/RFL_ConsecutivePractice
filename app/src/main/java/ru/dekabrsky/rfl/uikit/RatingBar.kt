@@ -23,7 +23,13 @@ fun RatingBar(
         for (i in 1..maxRating) {
             IconButton(onClick = { onRatingChanged(i.toFloat()) }) {
                 Icon(
-                    imageVector = if (i <= rating) Icons.Filled.Star else Icons.Outlined.Close,
+                    painter = painterResource(
+                        if (i <= rating) {
+                            R.drawable.star_filled
+                        } else {
+                            R.drawable.star_border
+                        }
+                    ),
                     contentDescription = null,
                 )
             }

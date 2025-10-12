@@ -14,6 +14,27 @@ fun tryParseServerDate(dateTime: String?): LocalDateTime? {
     }
 }
 
+fun formatDateTime(dateTime: LocalDateTime): String {
+    val now = LocalDateTime.now()
+    val today = now.toLocalDate()
+    val yesterday = today.minusDays(1)
+    val date = dateTime.toLocalDate()
+
+    return when {
+        date == today -> "Сегодня, ${formatTimeOnly(dateTime)}"
+        date == yesterday -> "Вчера, ${formatTimeOnly(dateTime)}"
+        else -> "${formatDateOnly(dateTime)}, ${formatTimeOnly(dateTime)}"
+    }
+}
+
+private fun formatDateOnly(dateTime: LocalDateTime): String {
+    return DateTimeFormatter.ofPattern("dd.MM.yyyy").format(dateTime)
+}
+
+private fun formatTimeOnly(dateTime: LocalDateTime): String {
+    return DateTimeFormatter.ofPattern("HH:mm").format(dateTime)
+}
+
 fun LocalDateTime?.orNow(): LocalDateTime {
     return this ?: LocalDateTime.now()
 }
