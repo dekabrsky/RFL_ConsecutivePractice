@@ -2,12 +2,22 @@ package ru.dekabrsky.rfl.news.presentation.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -37,32 +47,46 @@ fun NewsListScreen() {
         state.state,
         viewModel::onNewsClick,
         viewModel::onRetryClick,
+        viewModel::onSettingsClick,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NewsListScreenContent(
     state: NewsListViewState.State,
     onNewsClick: (NewsUiModel) -> Unit = {},
     onRetryClick: () -> Unit = {},
+    onSettingsClick: () -> Unit = {},
 ) {
-    when (state) {
-        NewsListViewState.State.Loading -> {
-            FullscreenLoading()
-        }
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = { onSettingsClick() }) {
+                Icon(Icons.Default.Settings, "Settings")
+            }
+        },
+        contentWindowInsets = WindowInsets(0.dp),
+    ) {
+        Box(Modifier.padding(it)) {
+            when (state) {
+                NewsListViewState.State.Loading -> {
+                    FullscreenLoading()
+                }
 
-        is NewsListViewState.State.Error -> {
-            FullscreenError(
-                retry = { onRetryClick() },
-                text = state.error
-            )
-        }
+                is NewsListViewState.State.Error -> {
+                    FullscreenError(
+                        retry = { onRetryClick() },
+                        text = state.error
+                    )
+                }
 
-        is NewsListViewState.State.Success -> {
-            LazyColumn {
-                state.data.forEach { news ->
-                    item {
-                        NewsListItem(news) { onNewsClick(it) }
+                is NewsListViewState.State.Success -> {
+                    LazyColumn {
+                        state.data.forEach { news ->
+                            item {
+                                NewsListItem(news) { onNewsClick(it) }
+                            }
+                        }
                     }
                 }
             }

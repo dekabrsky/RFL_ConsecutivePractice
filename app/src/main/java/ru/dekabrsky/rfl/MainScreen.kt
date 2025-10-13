@@ -30,6 +30,7 @@ import ru.dekabrsky.rfl.navigation.TopLevelBackStack
 import ru.dekabrsky.rfl.news.presentation.model.NewsUiModel
 import ru.dekabrsky.rfl.news.presentation.screen.NewsDetailsDialog
 import ru.dekabrsky.rfl.news.presentation.screen.NewsListScreen
+import ru.dekabrsky.rfl.news.presentation.screen.NewsSettingsDialog
 import kotlin.getValue
 
 interface TopLevelRoute: Route {
@@ -44,6 +45,8 @@ data object News: TopLevelRoute {
 }
 
 data class NewsDetails(val news: NewsUiModel) : Route
+
+data object NewsSettings : Route
 
 @Composable
 fun MainScreen() {
@@ -83,6 +86,11 @@ fun MainScreen() {
                     metadata = DialogSceneStrategy.dialog(DialogProperties())
                 ) {
                     NewsDetailsDialog(it.news)
+                }
+                entry<NewsSettings>(
+                    metadata = DialogSceneStrategy.dialog(DialogProperties())
+                ) {
+                    NewsSettingsDialog()
                 }
             }
         )

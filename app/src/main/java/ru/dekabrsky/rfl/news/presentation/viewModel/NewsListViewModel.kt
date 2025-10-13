@@ -5,9 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMap
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.dekabrsky.rfl.NewsDetails
+import ru.dekabrsky.rfl.NewsSettings
 import ru.dekabrsky.rfl.core.formatDateTime
 import ru.dekabrsky.rfl.core.launchLoadingAndError
 import ru.dekabrsky.rfl.navigation.Route
@@ -34,6 +39,10 @@ class NewsListViewModel(
 
     fun onRetryClick() = loadNews()
 
+    fun onSettingsClick() {
+        topLevelBackStack.add(NewsSettings)
+    }
+
     private fun loadNews() {
         viewModelScope.launchLoadingAndError(
             handleError = { e ->
@@ -42,8 +51,12 @@ class NewsListViewModel(
         ) {
             updateState(NewsListViewState.State.Loading)
 
-            val news = interactor.getNews()
-            updateState(NewsListViewState.State.Success(mapToUi(news)))
+            interactor.observeNewFirstSettings()
+                .onEach { updateState(NewsListViewState.State.Loading) }
+                .map { interactor.getNews(it) }
+                .collect { news ->
+                    updateState(NewsListViewState.State.Success(mapToUi(news)))
+                }
         }
     }
 
