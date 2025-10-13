@@ -1,6 +1,7 @@
 package ru.dekabrsky.rfl.news.domain.interactor
 
 import ru.dekabrsky.rfl.news.data.repository.NewsRepository
+import ru.dekabrsky.rfl.news.domain.model.NewsEntity
 
 class NewsInteractor(
     private val repository: NewsRepository
@@ -11,4 +12,8 @@ class NewsInteractor(
 
     suspend fun setNewFirstSetting(newFirst: Boolean) =
         repository.setNewFirstSettings(newFirst)
+
+    suspend fun saveFavorite(news: NewsEntity) = repository.saveFavorite(news)
+
+    suspend fun getFavorites() = repository.getFavorites()
 }

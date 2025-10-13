@@ -15,11 +15,11 @@ val newsFeatureModule = module {
     single { get<Retrofit>().create(NewsApi::class.java) }
 
     factory { NewsResponseToEntityMapper() }
-    single { NewsRepository(get(), get(), get(), get(), get()) }
+    single { NewsRepository(get(), get(), get(), get(), get(), get()) }
 
     single { NewsInteractor(get()) }
 
     viewModel { NewsListViewModel(get(), get()) }
-    viewModel { NewsDetailsViewModel(get(), get()) }
+    viewModel { NewsDetailsViewModel(get(), get(), get()) }
     viewModel { NewsSettingsViewModel(get(), get()) }
 }

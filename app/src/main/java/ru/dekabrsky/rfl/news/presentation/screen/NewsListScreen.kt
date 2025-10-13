@@ -4,39 +4,40 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
-import ru.dekabrsky.rfl.News
-import ru.dekabrsky.rfl.NewsDetails
-import ru.dekabrsky.rfl.navigation.Route
-import ru.dekabrsky.rfl.navigation.TopLevelBackStack
 import ru.dekabrsky.rfl.news.presentation.MockData
+import ru.dekabrsky.rfl.news.presentation.model.NewsListFilter
 import ru.dekabrsky.rfl.news.presentation.model.NewsListViewState
 import ru.dekabrsky.rfl.news.presentation.model.NewsUiModel
 import ru.dekabrsky.rfl.news.presentation.viewModel.NewsListViewModel
 import ru.dekabrsky.rfl.uikit.FullscreenError
 import ru.dekabrsky.rfl.uikit.FullscreenLoading
+import ru.dekabrsky.rfl.uikit.Spacing
 
 @Composable
 fun NewsListScreen() {
@@ -44,31 +45,42 @@ fun NewsListScreen() {
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     NewsListScreenContent(
-        state.state,
+        state,
         viewModel::onNewsClick,
         viewModel::onRetryClick,
         viewModel::onSettingsClick,
+        viewModel::onFilterChange,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NewsListScreenContent(
-    state: NewsListViewState.State,
+    state: NewsListViewState,
     onNewsClick: (NewsUiModel) -> Unit = {},
     onRetryClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
+    onFilterChange: (NewsListFilter) -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { onSettingsClick() }) {
                 Icon(Icons.Default.Settings, "Settings")
             }
         },
-        contentWindowInsets = WindowInsets(0.dp),
+        topBar = {
+            TopAppBar(
+                { NewsListFilters(state, onFilterChange) },
+                scrollBehavior = scrollBehavior
+            )
+        },
+        contentWindowInsets = WindowInsets(),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) {
         Box(Modifier.padding(it)) {
-            when (state) {
+            when (state.state) {
                 NewsListViewState.State.Loading -> {
                     FullscreenLoading()
                 }
@@ -76,13 +88,13 @@ private fun NewsListScreenContent(
                 is NewsListViewState.State.Error -> {
                     FullscreenError(
                         retry = { onRetryClick() },
-                        text = state.error
+                        text = state.state.error
                     )
                 }
 
                 is NewsListViewState.State.Success -> {
                     LazyColumn {
-                        state.data.forEach { news ->
+                        state.state.data.forEach { news ->
                             item {
                                 NewsListItem(news) { onNewsClick(it) }
                             }
@@ -90,6 +102,24 @@ private fun NewsListScreenContent(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun NewsListFilters(
+    state: NewsListViewState,
+    onFilterChange: (NewsListFilter) -> Unit,
+) {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+    ) {
+        state.filters.forEach { filter ->
+            FilterChip(
+                selected = filter == state.currentFilter,
+                label = { Text(filter.text) },
+                onClick = { onFilterChange(filter) },
+            )
         }
     }
 }
@@ -131,6 +161,6 @@ fun NewsListItem(news: NewsUiModel, onNewsClick: (NewsUiModel) -> Unit) {
 @Composable
 fun NewsListPreview() {
     NewsListScreenContent(
-        NewsListViewState.State.Success(MockData.getNews())
+        NewsListViewState(NewsListViewState.State.Success(MockData.getNews()))
     )
 }

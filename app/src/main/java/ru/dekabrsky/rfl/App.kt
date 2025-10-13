@@ -6,6 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import ru.dekabrsky.rfl.di.mainModule
 import ru.dekabrsky.rfl.di.networkModule
+import ru.dekabrsky.rfl.news.di.dbModule
 import ru.dekabrsky.rfl.news.di.newsFeatureModule
 
 class App: Application() {
@@ -14,7 +15,7 @@ class App: Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(mainModule, networkModule, newsFeatureModule)
+            modules(mainModule, networkModule, newsFeatureModule, dbModule)
         }
     }
 }

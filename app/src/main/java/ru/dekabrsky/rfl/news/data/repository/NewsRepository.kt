@@ -10,8 +10,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import ru.dekabrsky.rfl.core.orNow
+import ru.dekabrsky.rfl.core.tryParseServerDate
 import ru.dekabrsky.rfl.news.data.api.NewsApi
+import ru.dekabrsky.rfl.news.data.database.NewsDatabase
 import ru.dekabrsky.rfl.news.data.mapper.NewsResponseToEntityMapper
+import ru.dekabrsky.rfl.news.data.model.NewsDbEntity
+import ru.dekabrsky.rfl.news.domain.model.NewsEntity
 
 class NewsRepository(
     private val api: NewsApi,
@@ -19,6 +24,7 @@ class NewsRepository(
     private val dataStore: DataStore<Preferences>,
     private val preferencesEditor: SharedPreferences.Editor,
     private val preferences: SharedPreferences,
+    private val db: NewsDatabase,
 ) {
     private val newFirstKey = booleanPreferencesKey(NEW_FIRST_KEY)
 
@@ -38,6 +44,30 @@ class NewsRepository(
         }
         //preferencesEditor.putBoolean(NEW_FIRST_KEY, newFirst)
     }
+
+    suspend fun saveFavorite(news: NewsEntity) =
+        withContext(Dispatchers.IO) {
+            db.newsDao().insert(
+                NewsDbEntity(
+                    title = news.title,
+                    text = news.text,
+                    time = news.time.toString(),
+                )
+            )
+        }
+
+    suspend fun getFavorites() =
+        withContext(Dispatchers.IO) {
+            db.newsDao().getAll().map {
+                NewsEntity(
+                    id = it.id.toString(),
+                    title = it.title.orEmpty(),
+                    text = it.text.orEmpty(),
+                    time = tryParseServerDate(it.time).orNow(),
+                    imageUrl = null,
+                )
+            }
+        }
 
     companion object {
         private const val NEW_FIRST_KEY = "NEW_FIRST_KEY"
