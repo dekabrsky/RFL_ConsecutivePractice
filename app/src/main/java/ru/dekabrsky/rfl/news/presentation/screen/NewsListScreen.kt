@@ -35,9 +35,9 @@ import ru.dekabrsky.rfl.news.presentation.model.NewsListFilter
 import ru.dekabrsky.rfl.news.presentation.model.NewsListViewState
 import ru.dekabrsky.rfl.news.presentation.model.NewsUiModel
 import ru.dekabrsky.rfl.news.presentation.viewModel.NewsListViewModel
-import ru.dekabrsky.rfl.uikit.FullscreenError
-import ru.dekabrsky.rfl.uikit.FullscreenLoading
-import ru.dekabrsky.rfl.uikit.Spacing
+import ru.dekabrsky.uikit.uikit.FullscreenError
+import ru.dekabrsky.uikit.uikit.FullscreenLoading
+import ru.dekabrsky.uikit.uikit.Spacing
 
 @Composable
 fun NewsListScreen() {

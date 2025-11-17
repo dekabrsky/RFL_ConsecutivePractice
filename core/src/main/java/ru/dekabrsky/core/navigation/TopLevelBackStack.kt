@@ -1,4 +1,4 @@
-package ru.dekabrsky.rfl.navigation
+package ru.dekabrsky.core.navigation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf

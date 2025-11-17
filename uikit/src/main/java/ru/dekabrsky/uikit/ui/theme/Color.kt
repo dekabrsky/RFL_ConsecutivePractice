@@ -1,4 +1,4 @@
-package ru.dekabrsky.rfl.ui.theme
+package ru.dekabrsky.uikit.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

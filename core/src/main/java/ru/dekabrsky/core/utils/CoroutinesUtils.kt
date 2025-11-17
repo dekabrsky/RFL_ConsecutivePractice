@@ -1,4 +1,4 @@
-package ru.dekabrsky.rfl.core
+package ru.dekabrsky.core.utils
 
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

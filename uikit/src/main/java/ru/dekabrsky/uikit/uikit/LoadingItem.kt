@@ -1,4 +1,4 @@
-package ru.dekabrsky.rfl.uikit
+package ru.dekabrsky.uikit.uikit
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -7,7 +7,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ru.dekabrsky.rfl.ui.theme.RFLTheme
+import ru.dekabrsky.uikit.ui.theme.RFLTheme
 
 @Composable
 fun LoadingItem() {

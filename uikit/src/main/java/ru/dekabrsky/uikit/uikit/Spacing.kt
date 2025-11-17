@@ -1,4 +1,4 @@
-package ru.dekabrsky.rfl.uikit
+package ru.dekabrsky.uikit.uikit
 
 import androidx.compose.ui.unit.dp
 

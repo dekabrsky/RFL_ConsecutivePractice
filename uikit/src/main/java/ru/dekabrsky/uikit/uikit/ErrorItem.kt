@@ -1,4 +1,4 @@
-package ru.dekabrsky.rfl.uikit
+package ru.dekabrsky.uikit.uikit
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -14,8 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import ru.dekabrsky.rfl.R
-import ru.dekabrsky.rfl.ui.theme.RFLTheme
+import ru.dekabrsky.uikit.ui.theme.RFLTheme
+import ru.dekabrsky.uikit.R
 
 @Composable
 fun ErrorItem(

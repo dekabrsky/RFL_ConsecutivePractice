@@ -1,7 +1,7 @@
 package ru.dekabrsky.rfl.news.data.mapper
 
-import ru.dekabrsky.rfl.core.orNow
-import ru.dekabrsky.rfl.core.tryParseServerDate
+import ru.dekabrsky.core.utils.orNow
+import ru.dekabrsky.core.utils.tryParseServerDate
 import ru.dekabrsky.rfl.news.data.model.NewsListResponse
 import ru.dekabrsky.rfl.news.domain.model.NewsEntity
 

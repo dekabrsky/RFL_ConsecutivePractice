@@ -1,13 +1,14 @@
-package ru.dekabrsky.rfl.core
+package ru.dekabrsky.core.utils
 
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 fun tryParseServerDate(dateTime: String?): LocalDateTime? {
     return try {
-        val zonedDateTime = java.time.ZonedDateTime.parse(dateTime)
+        val zonedDateTime = ZonedDateTime.parse(dateTime)
         zonedDateTime.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime()
     } catch (e: DateTimeParseException) {
         null

@@ -2,7 +2,6 @@ package ru.dekabrsky.rfl.news.presentation.screen
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,9 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -37,14 +33,13 @@ import com.bumptech.glide.integration.compose.GlideImage
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ru.dekabrsky.rfl.R
-import ru.dekabrsky.rfl.navigation.Route
-import ru.dekabrsky.rfl.navigation.TopLevelBackStack
 import ru.dekabrsky.rfl.news.presentation.MockData
 import ru.dekabrsky.rfl.news.presentation.model.NewsDetailsViewState
 import ru.dekabrsky.rfl.news.presentation.model.NewsUiModel
 import ru.dekabrsky.rfl.news.presentation.viewModel.NewsDetailsViewModel
-import ru.dekabrsky.rfl.uikit.RatingBar
-import ru.dekabrsky.rfl.uikit.Spacing
+import ru.dekabrsky.uikit.uikit.RatingBar
+import ru.dekabrsky.uikit.uikit.Spacing
+import ru.dekabrsky.uikit.R as uikitR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,7 +79,7 @@ fun NewsDetailsContent(
             modifier = Modifier.align(Alignment.End)
         ) {
             Text(
-                text = stringResource(R.string.share),
+                text = stringResource(uikitR.string.share),
                 style = MaterialTheme.typography.bodyMedium,
             )
 

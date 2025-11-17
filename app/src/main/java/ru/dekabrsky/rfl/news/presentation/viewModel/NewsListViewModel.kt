@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import ru.dekabrsky.rfl.NewsDetails
 import ru.dekabrsky.rfl.NewsSettings
-import ru.dekabrsky.rfl.core.formatDateTime
-import ru.dekabrsky.rfl.core.launchLoadingAndError
-import ru.dekabrsky.rfl.navigation.Route
-import ru.dekabrsky.rfl.navigation.TopLevelBackStack
+import ru.dekabrsky.core.utils.formatDateTime
+import ru.dekabrsky.core.utils.launchLoadingAndError
+import ru.dekabrsky.core.navigation.Route
+import ru.dekabrsky.core.navigation.TopLevelBackStack
 import ru.dekabrsky.rfl.news.domain.interactor.NewsInteractor
 import ru.dekabrsky.rfl.news.domain.model.NewsEntity
 import ru.dekabrsky.rfl.news.presentation.model.NewsListFilter

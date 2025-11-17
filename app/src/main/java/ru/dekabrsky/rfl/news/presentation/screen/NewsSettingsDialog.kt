@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -24,7 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import ru.dekabrsky.rfl.news.presentation.model.NewsSettingsState
 import ru.dekabrsky.rfl.news.presentation.viewModel.NewsSettingsViewModel
-import ru.dekabrsky.rfl.uikit.Spacing
+import ru.dekabrsky.uikit.uikit.Spacing
 
 @Composable
 fun NewsSettingsDialog() {

@@ -1,26 +1,21 @@
-package ru.dekabrsky.rfl.uikit
+package ru.dekabrsky.uikit.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import ru.dekabrsky.uikit.uikit.Spacing
 
 @Composable
-fun FullscreenError(
-    retry: () -> Unit,
-    text: String? = null,
-) {
+fun FullscreenMessage(msg: String) {
     Box(
         Modifier
             .fillMaxSize()
-            .padding(Spacing.medium),
-        contentAlignment = Alignment.Center
+            .padding(Spacing.medium), contentAlignment = Alignment.Center
     ) {
-        ErrorItem(
-            error = text,
-            onClick = retry,
-        )
+        Text(text = msg)
     }
 }
