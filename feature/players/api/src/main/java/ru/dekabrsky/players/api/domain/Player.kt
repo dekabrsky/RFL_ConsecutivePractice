@@ -1,4 +1,4 @@
-package ru.dekabrsky.rfl.players.domain.model
+package ru.dekabrsky.players.api.domain
 
 data class Player(
     val name: String,

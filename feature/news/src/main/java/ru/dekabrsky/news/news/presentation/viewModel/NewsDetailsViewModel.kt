@@ -12,15 +12,21 @@ import ru.dekabrsky.news.news.domain.interactor.NewsInteractor
 import ru.dekabrsky.news.news.domain.model.NewsEntity
 import ru.dekabrsky.news.news.presentation.model.NewsDetailsViewState
 import ru.dekabrsky.news.news.presentation.model.NewsUiModel
+import ru.dekabrsky.players.api.domain.IPlayersInteractor
 import java.time.LocalDateTime
 
 class NewsDetailsViewModel(
     private val topLevelBackStack: TopLevelBackStack<Route>,
     private val news: NewsUiModel,
     private val interactor: NewsInteractor,
+    private val playersInteractor: IPlayersInteractor,
 ): ViewModel() {
     private val mutableState = MutableStateFlow(NewsDetailsViewState(news))
     val state = mutableState.asStateFlow()
+
+    init {
+        mutableState.update { it.copy(player = playersInteractor.getPlayer("")) }
+    }
 
     fun onRatingChanged(rating: Float) {
         mutableState.update { it.copy(rating = rating) }

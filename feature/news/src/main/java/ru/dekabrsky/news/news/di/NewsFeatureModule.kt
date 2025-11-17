@@ -36,7 +36,7 @@ val newsFeatureModule = module {
     single { NewsInteractor(get()) }
 
     viewModel { NewsListViewModel(get(), get()) }
-    viewModel { NewsDetailsViewModel(get(), get(), get()) }
+    viewModel { NewsDetailsViewModel(get(), get(), get(), get()) }
     viewModel { NewsSettingsViewModel(get(), get()) }
 
     factory<EntryProviderInstaller>(qualifier = named(NEWS_QUALIFIER)) {

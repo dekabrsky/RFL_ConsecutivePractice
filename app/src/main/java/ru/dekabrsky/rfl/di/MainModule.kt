@@ -12,6 +12,8 @@ import ru.dekabrsky.core.navigation.TopLevelBackStack
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import ru.dekabrsky.players.api.domain.IPlayersInteractor
+import ru.dekabrsky.players.impl.domain.GetPlayersInteractor
 import ru.dekabrsky.rfl.Players
 
 
@@ -29,6 +31,8 @@ val mainModule = module {
     single {
         getDataStore(androidContext())
     }
+
+    single<IPlayersInteractor> { GetPlayersInteractor() }
 }
 
 fun getSharedPrefs(androidApplication: Application): SharedPreferences {

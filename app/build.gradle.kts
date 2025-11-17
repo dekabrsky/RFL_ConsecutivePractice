@@ -89,4 +89,5 @@ dependencies {
     implementation(project(":uikit"))
     implementation(project(":core"))
     implementation(project(":feature:news"))
+    implementation(project(":feature:players:impl"))
 }

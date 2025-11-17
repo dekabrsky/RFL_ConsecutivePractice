@@ -37,6 +37,7 @@ import ru.dekabrsky.news.news.presentation.MockData
 import ru.dekabrsky.news.news.presentation.model.NewsDetailsViewState
 import ru.dekabrsky.news.news.presentation.model.NewsUiModel
 import ru.dekabrsky.news.news.presentation.viewModel.NewsDetailsViewModel
+import ru.dekabrsky.players.api.presentation.PlayerItem
 import ru.dekabrsky.uikit.uikit.RatingBar
 import ru.dekabrsky.uikit.uikit.Spacing
 import ru.dekabrsky.uikit.R as uikitR
@@ -120,6 +121,8 @@ fun NewsDetailsContent(
                 contentScale = ContentScale.Fit,
             )
         }
+
+        state.player?.let { PlayerItem(it) }
 
         RatingBar(state.rating) { onRatingChanged(it) }
 

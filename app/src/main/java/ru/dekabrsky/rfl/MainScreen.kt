@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
-import androidx.navigation3.runtime.EntryProviderBuilder
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.scene.DialogSceneStrategy
@@ -25,8 +24,7 @@ import ru.dekabrsky.core.navigation.Route
 import ru.dekabrsky.core.navigation.TopLevelBackStack
 import ru.dekabrsky.news.news.di.NEWS_QUALIFIER
 import ru.dekabrsky.news.news.presentation.screen.NewsListScreen
-import ru.dekabrsky.rfl.players.presentation.PlayersScreen
-import kotlin.Unit
+import ru.dekabrsky.players.impl.presentation.PlayersScreen
 import kotlin.getValue
 
 interface TopLevelRoute: Route {

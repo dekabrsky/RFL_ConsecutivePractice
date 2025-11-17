@@ -2,12 +2,10 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.jetbrains.kotlin.serialization)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "ru.dekabrsky.news"
+    namespace = "ru.dekabrsky.players.api"
     compileSdk = 36
 
     defaultConfig {
@@ -35,33 +33,10 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.material.icons.core)
 
-    // Navigation
-    implementation(libs.bundles.navigation3)
-    implementation(libs.kotlinx.serialization.core)
-
     // image loading
     implementation(libs.glide)
     implementation(libs.glide.compose)
 
-    // DI
-    implementation(libs.bundles.koin)
-
-    // network
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.serialization)
-    implementation(libs.kotlinx.serialization.json)
-    debugImplementation(libs.chucker)
-    releaseImplementation(libs.chucker.no.op)
-
-    // db
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
-    annotationProcessor(libs.androidx.room.compiler)
-    implementation(libs.room.ktx)
-
-    implementation(libs.androidx.datastore.preferences)
-
-    implementation(project(":uikit"))
     implementation(project(":core"))
-    implementation(project(":feature:players:api"))
+    implementation(project(":uikit"))
 }
