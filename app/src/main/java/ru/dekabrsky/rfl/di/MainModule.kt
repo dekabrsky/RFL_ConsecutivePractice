@@ -15,10 +15,11 @@ import ru.dekabrsky.rfl.news.presentation.viewModel.NewsDetailsViewModel
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import ru.dekabrsky.rfl.Players
 
 
 val mainModule = module {
-    single { TopLevelBackStack<Route>(News) }
+    single { TopLevelBackStack<Route>(Players) }
 
     single {
         getSharedPrefs(androidApplication())

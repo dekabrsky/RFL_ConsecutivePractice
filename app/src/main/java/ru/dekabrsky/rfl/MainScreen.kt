@@ -31,6 +31,7 @@ import ru.dekabrsky.rfl.news.presentation.model.NewsUiModel
 import ru.dekabrsky.rfl.news.presentation.screen.NewsDetailsDialog
 import ru.dekabrsky.rfl.news.presentation.screen.NewsListScreen
 import ru.dekabrsky.rfl.news.presentation.screen.NewsSettingsDialog
+import ru.dekabrsky.rfl.players.presentation.PlayersScreen
 import kotlin.getValue
 
 interface TopLevelRoute: Route {
@@ -77,7 +78,7 @@ fun MainScreen() {
             ),
             entryProvider = entryProvider {
                 entry<Players> {
-                    ContentBlue("Players")
+                    PlayersScreen()
                 }
                 entry<News> {
                     NewsListScreen()
@@ -94,27 +95,5 @@ fun MainScreen() {
                 }
             }
         )
-    }
-}
-
-@Composable
-fun ContentBlue(text: String) {
-    Text(
-        text = text,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Blue)
-    )
-}
-
-@Composable
-fun ContentGreen(text: String, content: @Composable () -> Unit) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(Color.Green)
-    ) {
-        Text(text)
-        content()
     }
 }
