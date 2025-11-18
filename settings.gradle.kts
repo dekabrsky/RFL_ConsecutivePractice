@@ -21,3 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "RFL"
 include(":app")
+include(":uikit")
+include(":core")
+include(":feature:news")

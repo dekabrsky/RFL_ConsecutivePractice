@@ -3,9 +3,7 @@ package ru.dekabrsky.rfl.players.presentation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
@@ -18,7 +16,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import ru.dekabrsky.rfl.players.domain.model.GetPlayersInteractor
 import ru.dekabrsky.rfl.players.domain.model.Player
-import ru.dekabrsky.rfl.uikit.Spacing
+import ru.dekabrsky.uikit.uikit.Spacing
 
 @Composable
 fun PlayersScreen() {

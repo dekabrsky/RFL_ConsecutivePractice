@@ -85,4 +85,8 @@ dependencies {
     implementation(libs.room.ktx)
 
     implementation(libs.androidx.datastore.preferences)
+
+    implementation(project(":uikit"))
+    implementation(project(":core"))
+    implementation(project(":feature:news"))
 }

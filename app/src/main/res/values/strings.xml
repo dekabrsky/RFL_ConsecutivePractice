@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">RFL</string>
-    <string name="error_occured">Произошла ошибка</string>
-    <string name="share">Поделиться</string>
-    <string name="share_by">Поделиться через</string>
 </resources>

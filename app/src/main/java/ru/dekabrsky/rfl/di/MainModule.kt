@@ -6,12 +6,9 @@ import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
-import ru.dekabrsky.rfl.News
-import ru.dekabrsky.rfl.navigation.Route
-import ru.dekabrsky.rfl.navigation.TopLevelBackStack
-import ru.dekabrsky.rfl.news.presentation.viewModel.NewsDetailsViewModel
+import ru.dekabrsky.core.navigation.Route
+import ru.dekabrsky.core.navigation.TopLevelBackStack
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile

@@ -1,8 +1,5 @@
 package ru.dekabrsky.rfl
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
@@ -11,12 +8,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -24,13 +18,16 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.scene.DialogSceneStrategy
 import androidx.navigation3.ui.NavDisplay
+import org.koin.core.qualifier.named
 import org.koin.java.KoinJavaComponent.inject
-import ru.dekabrsky.rfl.navigation.Route
-import ru.dekabrsky.rfl.navigation.TopLevelBackStack
-import ru.dekabrsky.rfl.news.presentation.model.NewsUiModel
-import ru.dekabrsky.rfl.news.presentation.screen.NewsDetailsDialog
-import ru.dekabrsky.rfl.news.presentation.screen.NewsListScreen
-import ru.dekabrsky.rfl.news.presentation.screen.NewsSettingsDialog
+import ru.dekabrsky.core.navigation.EntryProviderInstaller
+import ru.dekabrsky.core.navigation.Route
+import ru.dekabrsky.core.navigation.TopLevelBackStack
+import ru.dekabrsky.news.di.NEWS_QUALIFIER
+import ru.dekabrsky.news.presentation.model.NewsUiModel
+import ru.dekabrsky.news.presentation.screen.NewsDetailsDialog
+import ru.dekabrsky.news.presentation.screen.NewsListScreen
+import ru.dekabrsky.news.presentation.screen.NewsSettingsDialog
 import ru.dekabrsky.rfl.players.presentation.PlayersScreen
 import kotlin.getValue
 
@@ -45,14 +42,15 @@ data object News: TopLevelRoute {
     override val icon = Icons.AutoMirrored.Filled.List
 }
 
-data class NewsDetails(val news: NewsUiModel) : Route
-
-data object NewsSettings : Route
-
 @Composable
 fun MainScreen() {
     val topLevelBackStack by inject<TopLevelBackStack<Route>>(clazz = TopLevelBackStack::class.java)
     val dialogStrategy = remember { DialogSceneStrategy<Route>() }
+
+    val newsEntryProvider by inject<EntryProviderInstaller>(
+        clazz = EntryProviderInstaller::class.java,
+        qualifier = named(NEWS_QUALIFIER)
+    )
 
     Scaffold(bottomBar = {
         NavigationBar {
@@ -83,16 +81,7 @@ fun MainScreen() {
                 entry<News> {
                     NewsListScreen()
                 }
-                entry<NewsDetails>(
-                    metadata = DialogSceneStrategy.dialog(DialogProperties())
-                ) {
-                    NewsDetailsDialog(it.news)
-                }
-                entry<NewsSettings>(
-                    metadata = DialogSceneStrategy.dialog(DialogProperties())
-                ) {
-                    NewsSettingsDialog()
-                }
+                newsEntryProvider.let { builder -> this.builder() }
             }
         )
     }
